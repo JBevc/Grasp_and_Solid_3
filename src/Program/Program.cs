@@ -26,10 +26,19 @@ namespace Full_GRASP_And_SOLID
             recipe.AddStep(new Step(GetProduct("Café"), 100, GetEquipment("Cafetera"), 120));
             recipe.AddStep(new Step(GetProduct("Leche"), 200, GetEquipment("Hervidor"), 60));
 
-            AllInOnePrinter printer = new AllInOnePrinter();
-            printer.PrintRecipe(recipe, Destination.Console);
-            printer.PrintRecipe(recipe, Destination.File);
+            IAllInOnePrinter printer;
+            printer = new ConsolePrinter();
+            printer.PrintRecipe(recipe);
+            printer = new FilePrinter();
+            printer.PrintRecipe(recipe);
         }
+
+        /* El patrón utilizado fue polimorfismo. 
+        Se comenzó modificando la clase AllInOnePrinter, creando una interfaz con el mismo nombre. 
+        Luego se crearon dos clases adicionales, con la responsabilidad de imprimir (utilizando el método PrintRecipe, de la interfaz anterior)
+        acorde a el destino asignado. 
+        Estas clases pertenecen al tipo IAllInOnePrinter, con lo que se logra que no sea necesario preguntar 
+        por el destino de la impresión al ejecutar PrintRecipe, logrando que print recipe sea una operación polimórfica. */
 
         private static void PopulateCatalogs()
         {
